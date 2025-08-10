@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-950 font-poppins transition-colors duration-500">
+<!-- Sidebar -->
+<aside class="fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-blue-900 to-blue-700 dark:from-gray-900 dark:to-gray-800 text-white hidden md:block shadow-2xl z-50">
+    <div class="flex items-center p-4">
+        <i class="fas fa-chart-line text-2xl mr-2 text-amber-500 dark:text-cyan-400"></i>
+        <h1 class="text-xl font-bold">Dashboard</h1>
+    </div>
+    <ul class="space-y-2 p-4">
+        <li><a href="#overview" class="block py-2 px-4 rounded-lg hover:bg-blue-800 dark:hover:bg-gray-700 transition-all duration-300"><i class="fas fa-home mr-2"></i> Overview</a></li>
+        <li><a href="#analytics" class="block py-2 px-4 rounded-lg hover:bg-blue-800 dark:hover:bg-gray-700 transition-all duration-300"><i class="fas fa-chart-bar mr-2"></i> Analytics</a></li>
+        <li><a href="#data" class="block py-2 px-4 rounded-lg hover:bg-blue-800 dark:hover:bg-gray-700 transition-all duration-300"><i class="fas fa-table mr-2"></i> Data</a></li>
+        <li><a href="#tasks" class="block py-2 px-4 rounded-lg hover:bg-blue-800 dark:hover:bg-gray-700 transition-all duration-300"><i class="fas fa-tasks mr-2"></i> Tasks</a></li>
+        <li><a href="#notifications" class="block py-2 px-4 rounded-lg hover:bg-blue-800 dark:hover:bg-gray-700 transition-all duration-300"><i class="fas fa-bell mr-2"></i> Notifications</a></li>
+        <li><a href="#settings" class="block py-2 px-4 rounded-lg hover:bg-blue-800 dark:hover:bg-gray-700 transition-all duration-300"><i class="fas fa-cog mr-2"></i> Settings</a></li>
+    </ul>
+</aside>
+
+<!-- Mobile Navbar -->
+<nav class="bg-gradient-to-r from-blue-900 to-blue-700 dark:from-gray-900 dark:to-gray-800 text-white fixed w-full top-0 z-50 shadow-2xl md:hidden">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <i class="fas fa-chart-line text-2xl mr-2 text-amber-500 dark:text-cyan-400"></i>
+            <h1 class="text-2xl font-bold">Dashboard</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative">
+                <button id="user-menu-toggle" class="flex items-center text-sm focus:outline-none">
+                    <img src="https://via.placeholder.com/32" alt="User Avatar" class="w-8 h-8 rounded-full">
+                    <span class="ml-2 text-white hidden sm:inline">John Doe</span>
+                </button>
+                <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50">
+                    <a href="#" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
+                </div>
+            </div>
+            <button id="theme-toggle" class="text-xl focus:outline-none">
+                <i class="fas fa-moon text-amber-500 dark:text-cyan-400 transition-all duration-300 hover:scale-110"></i>
+            </button>
+            <button id="menu-toggle" class="text-xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    <ul id="mobile-menu" class="hidden flex-col space-y-2 p-4 bg-blue-900 dark:bg-gray-900">
+        <li><a href="#overview" class="block py-2 px-4 text-white hover:text-amber-400 dark:hover:text-cyan-300 transition-all duration-300">Overview</a></li>
+        <li><a href="#analytics" class="block py-2 px-4 text-white hover:text-amber-400 dark:hover:text-cyan-300 transition-all duration-300">Analytics</a></li>
+        <li><a href="#data" class="block py-2 px-4 text-white hover:text-amber-400 dark:hover:text-cyan-300 transition-all duration-300">Data</a></li>
+        <li><a href="#tasks" class="block py-2 px-4 text-white hover:text-amber-400 dark:hover:text-cyan-300 transition-all duration-300">Tasks</a></li>
+        <li><a href="#notifications" class="block py-2 px-4 text-white hover:text-amber-400 dark:hover:text-cyan-300 transition-all duration-300">Notifications</a></li>
+        <li><a href="#settings" class="block py-2 px-4 text-white hover:text-amber-400 dark:hover:text-cyan-300 transition-all duration-300">Settings</a></li>
+    </ul>
+</nav>
+
+<!-- Main Content -->
+<main class="md:ml-64 p-4">
+    <!-- Desktop User Menu -->
+    <div class="hidden md:flex items-center fixed top-4 right-4 z-50">
+        <button id="desktop-user-menu-toggle" class="flex items-center text-sm focus:outline-none">
+            <img src="https://via.placeholder.com/32" alt="User Avatar" class="w-8 h-8 rounded-full">
+            <span class="ml-2 text-white">John Doe</span>
+        </button>
+        <div id="desktop-user-menu" class="hidden absolute right-0 top-10 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50">
+            <a href="#" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+            <a href="#" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button id="fab" class="fixed bottom-6 right-6 bg-amber-500 dark:bg-cyan-600 text-white p-4 rounded-full shadow-xl hover:bg-amber-600 dark:hover:bg-cyan-700 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Welcome Card -->
+    <section class="py-8 bg-white dark:bg-gray-950">
+        <div class="container mx-auto px-4">
+            <div class="bg-gradient-to-r from-blue-900 to-blue-700 dark:from-gray-900 dark:to-gray-800 text-white p-6 rounded-2xl shadow-xl max-w-5xl mx-auto" data-aos="fade-up">
+                <h2 class="text-2xl font-bold">Welcome, John Doe!</h2>
+                <p class="mt-2">Here's your dashboard overview for today.</p>
+                <div class="mt-4 flex space-x-4">
+                    <button class="bg-amber-500 dark:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg hover:bg-amber-600 dark:hover:bg-cyan-700 transition-all duration-300 transform hover:scale-105">
+                        Generate Report
+                    </button>
+                    <button class="bg-amber-500 dark:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg hover:bg-amber-600 dark:hover:bg-cyan-700 transition-all duration-300 transform hover:scale-105">
+                        Add User
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-16 bg-white dark:bg-gray-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl sm:text-4xl font-bold text-center mb-12 text-blue-900 dark:text-white tracking-tight" data-aos="fade-up">Overview</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-6 rounded-2xl shadow-xl text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-dollar-sign text-4xl text-amber-500 dark:text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900 dark:text-white">Revenue</h3>
+                    <p class="text-2xl font-bold text-gray-600 dark:text-gray-200">$12,345</p>
+                </div>
+                <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-6 rounded-2xl shadow-xl text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-users text-4xl text-amber-500 dark:text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900 dark:text-white">Active Users</h3>
+                    <p class="text-2xl font-bold text-gray-600 dark:text-gray-200">1,234</p>
+                </div>
+                <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-6 rounded-2xl shadow-xl text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-tasks text-4xl text-amber-500 dark:text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900 dark:text-white">Pending Tasks</h3>
+                    <p class="text-2xl font-bold text-gray-600 dark:text-gray-200">23</p>
+                </div>
+                <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-6 rounded-2xl shadow-xl text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fas fa-percentage text-4xl text-amber-500 dark:text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900 dark:text-white">Conversion Rate</h3>
+                    <p class="text-2xl font-bold text-gray-600 dark:text-gray-200">3.5%</p>
+                </div>
+            </div>
+            <!-- Project Progress -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold text-center mb-8 text-blue-900 dark:text-white" data-aos="fade-up">Project Progress</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-6 rounded-2xl shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                        <h4 class="text-lg font-semibold mb-2 text-blue-900 dark:text-white">Project Alpha</h4>
+                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5">
+                            <div class="bg-amber-500 dark:bg-cyan-600 h-2.5 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-200">75% Complete</p>
+                    </div>
+                    <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-6 rounded-2xl shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                        <h4 class="text-lg font-semibold mb-2 text-blue-900 dark:text-white">Project Beta</h4>
+                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5">
+                            <div class="bg-amber-500 dark:bg-cyan-600 h-2.5 rounded-full" style="width: 40%"></div>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-200">40% Complete</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Server Status Widget -->
+    <section class="py-8 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-6 rounded-2xl shadow-xl max-w-md mx-auto flex items-center" data-aos="fade-up">
+                <i class="fas fa-server text-3xl text-green-500 mr-4"></i>
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-900 dark:text-white">Server Status</h3>
+                    <p class="text-gray-600 dark:text-gray-200">Online</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics" class="py-16 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl sm:text-4xl font-bold text-center mb-12 text-blue-900 dark:text-white tracking-tight" data-aos="fade-up">Analytics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-900 dark:text-white">Sales Trend</h3>
+                    <canvas id="sales-chart"></canvas>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-900 dark:text-white">User Distribution</h3>
+                    <canvas id="user-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Table Section -->
+    <section id="data" class="py-16 bg-white dark:bg-gray-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl sm:text-4xl font-bold text-center mb-12 text-blue-900 dark:text-white tracking-tight" data-aos="fade-up">Data</h2>
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col sm:flex-row justify-between mb-6" data-aos="fade-up" data-aos-delay="100">
+                    <input
+                            type="text"
+                            id="search-input"
+                            placeholder="Search data..."
+                            class="w-full sm:w-1/2 p-4 rounded-lg text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-amber-400 dark:focus:ring-cyan-500 transition-all duration-300"
+                    >
+                    <select
+                            id="filter-category"
+                            class="w-full sm:w-1/4 p-4 rounded-lg text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-amber-400 dark:focus:ring-cyan-500 transition-all duration-300 mt-4 sm:mt-0"
+                    >
+                        <option value="all">All Categories</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Support">Support</option>
+                    </select>
+                </div>
+                <div class="overflow-x-auto">
+                    <table id="data-table" class="w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                        <thead>
+                        <tr class="text-left text-blue-900 dark:text-white">
+                            <th class="p-4">ID</th>
+                            <th class="p-4">Name</th>
+                            <th class="p-4">Category</th>
+                            <th class="p-4">Value</th>
+                            <th class="p-4">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tasks Section -->
+    <section id="tasks" class="py-16 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl sm:text-4xl font-bold text-center mb-12 text-blue-900 dark:text-white tracking-tight" data-aos="fade-up">Tasks</h2>
+            <div class="max-w-2xl mx-auto">
+                <div class="flex mb-6" data-aos="fade-up" data-aos-delay="100">
+                    <input
+                            type="text"
+                            id="task-input"
+                            placeholder="Add a new task..."
+                            class="flex-1 p-4 rounded-lg text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-amber-400 dark:focus:ring-cyan-500 transition-all duration-300"
+                    >
+                    <button
+                            id="add-task"
+                            class="ml-4 bg-amber-500 dark:bg-cyan-600 text-white font-semibold py-3 px-6 rounded-full shadow-xl hover:bg-amber-600 dark:hover:bg-cyan-700 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
+                    >
+                        Add
+                    </button>
+                </div>
+                <ul id="task-list" class="space-y-4" data-aos="fade-up" data-aos-delay="200"></ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notifications Section -->
+    <section id="notifications" class="py-16 bg-white dark:bg-gray-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl sm:text-4xl font-bold text-center mb-12 text-blue-900 dark:text-white tracking-tight" data-aos="fade-up">Notifications</h2>
+            <div class="max-w-2xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-4 rounded-2xl shadow-xl flex items-center">
+                    <i class="fas fa-bell text-2xl text-amber-500 dark:text-cyan-400 mr-4"></i>
+                    <p class="text-gray-600 dark:text-gray-200">New user registered: John Doe</p>
+                </div>
+                <div class="bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-4 rounded-2xl shadow-xl flex items-center">
+                    <i class="fas fa-exclamation-circle text-2xl text-red-500 mr-4"></i>
+                    <p class="text-gray-600 dark:text-gray-200">Task overdue: Complete report</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section id="settings" class="py-16 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl sm:text-4xl font-bold mb-8 text-blue-900 dark:text-white tracking-tight" data-aos="fade-up">Settings</h2>
+            <div class="max-w-md mx-auto bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 p-6 rounded-2xl shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-xl font-semibold mb-4 text-blue-900 dark:text-white">Theme</h3>
+                <button
+                        id="theme-toggle-settings"
+                        class="bg-amber-500 dark:bg-cyan-600 text-white font-semibold py-3 px-8 rounded-full shadow-xl hover:bg-amber-600 dark:hover:bg-cyan-700 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
+                >
+                    Toggle Dark Mode
+                </button>
+                <h3 class="text-xl font-semibold mt-6 mb-4 text-blue-900 dark:text-white">Date Range</h3>
+                <input
+                        type="date"
+                        id="date-picker"
+                        class="p-4 rounded-lg text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-amber-400 dark:focus:ring-cyan-500 transition-all duration-300"
+                >
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-blue-900 dark:bg-gray-900 text-white py-6 text-center">
+    <p>© 2025 Our Company. All rights reserved.</p>
+    <div class="mt-2">
+        <a href="#" class="text-amber-400 dark:text-cyan-400 hover:text-amber-300 dark:hover:text-cyan-300 mx-2 transition-all duration-300 transform hover:scale-125"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="text-amber-400 dark:text-cyan-400 hover:text-amber-300 dark:hover:text-cyan-300 mx-2 transition-all duration-300 transform hover:scale-125"><i class="fab fa-linkedin"></i></a>
+        <a href="#" class="text-amber-400 dark:text-cyan-400 hover:text-amber-300 dark:hover:text-cyan-300 mx-2 transition-all duration-300 transform hover:scale-125"><i class="fab fa-instagram"></i></a>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
